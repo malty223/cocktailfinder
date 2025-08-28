@@ -3,104 +3,109 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cocktail Finder</title>
+    <title>Strikes Bar</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
     <script src="https://cdn.tailwindcss.com"></script>
-<style>
-    body {
-        font-family: 'Inter', sans-serif;
-        background-color: #000000;
-        color: #e2e8f0;
-        min-height: 100vh;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: 1rem;
-    }
-    .container-bg {
-        background-color: #0d0d0d;
-    }
-    .input-style {
-        background-color: #1a1a1a;
-        border-color: #4a5568;
-        color: #e2e8f0;
-    }
-    .button-style {
-        background-color: #ff00ff;
-        transition: background-color 0.3s ease;
-    }
-    .button-style:hover {
-        background-color: #e600e6;
-    }
-    .text-green-300 {
-        color: #00ffff;
-    }
-    .text-teal-400 {
-        color: #00ffff;
-    }
-    .text-green-500 {
-        color: #ff00ff;
-    }
-    .text-teal-300 {
-        color: #ff00ff;
-    }
-    .text-green-400 {
-        color: #00ffff;
-    }
-    .text-red-400 {
-        color: #ff00ff;
-    }
-    #tab-ingredient, #tab-cocktail {
-        background-color: #2d3748;
-        color: #cbd5e0;
-    }
-    #tab-ingredient[style*="#48bb78"],
-    #tab-cocktail[style*="#48bb78"] {
-        background-color: #00ffff !important;
-        color: #fff !important;
-    }
-    ::-webkit-scrollbar {
-        width: 12px;
-    }
-    ::-webkit-scrollbar-track {
-        background: #1a1a1a;
-        border-radius: 10px;
-    }
-    ::-webkit-scrollbar-thumb {
-        background: #00ffff;
-        border-radius: 10px;
-        border: 3px solid #1a1a1a;
-    }
-    .image-card {
-        min-height: 150px;
-    }
-    @keyframes fadeIn {
-        from { opacity: 0; transform: translateY(10px); }
-        to { opacity: 1; transform: translateY(0); }
-    }
-    .fade-in-item {
-        animation: fadeIn 0.5s ease-out forwards;
-    }
-</style>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #000000; /* Pure black background */
+            color: #e2e8f0;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+        }
+        .container-bg {
+            background-color: #0d0d0d; /* Slightly lighter black for the container */
+        }
+        .input-style {
+            background-color: #1a1a1a; /* Darker input background */
+            border-color: #4a5568;
+            color: #e2e8f0; /* Light text color */
+        }
+        /* Neon glow effect for the search bar when it's focused */
+        .input-style:focus {
+            outline: none;
+            box-shadow: 0 0 10px #00ffff, 0 0 20px #00ffff; /* Neon blue glow */
+            border-color: #00ffff;
+        }
+        .button-style {
+            background-image: linear-gradient(to right, #00ffff, #ff00ff); /* Neon blue to pink gradient */
+            transition: background-image 0.3s ease;
+        }
+        .button-style:hover {
+            background-image: linear-gradient(to right, #ff00ff, #00ffff); /* Reverse gradient on hover */
+        }
+        /* Neon text colors for headings and other text */
+        .neon-blue {
+            color: #00ffff;
+        }
+        .neon-pink {
+            color: #ff00ff;
+        }
+        /* Neon gradient for the main title */
+        .neon-gradient {
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            background-image: linear-gradient(to right, #00ffff, #ff00ff);
+        }
+        .neon-gradient-text-shadow {
+            text-shadow: 0 0 5px #00ffff, 0 0 10px #ff00ff;
+        }
+        
+        /* Tab button colors */
+        #tab-ingredient, #tab-cocktail {
+            background-color: #2d3748;
+            color: #cbd5e0;
+        }
+        #tab-ingredient.active-tab, #tab-cocktail.active-tab {
+            background-color: #ff00ff !important;
+            color: #fff !important;
+        }
+        /* Custom scrollbar for a polished look */
+        ::-webkit-scrollbar {
+            width: 12px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #1a1a1a;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #00ffff;
+            border-radius: 10px;
+            border: 3px solid #1a1a1a;
+        }
+        .image-card {
+            min-height: 150px;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .fade-in-item {
+            animation: fadeIn 0.5s ease-out forwards;
+        }
+    </style>
 </head>
 <body>
 
     <div class="container-bg w-full max-w-4xl p-8 rounded-2xl shadow-2xl space-y-8">
         <header class="text-center">
-            <h1 class="text-4xl sm:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-teal-400 to-green-500 mb-2">
-                🍹 Cocktail Finder
+            <h1 class="text-4xl sm:text-5xl font-bold neon-gradient neon-gradient-text-shadow mb-2">
+                🎳 Strikes Bar
             </h1>
             <p class="text-md sm:text-lg text-gray-400">Search for cocktails by ingredient or explore their recipes.</p>
         </header>
 
         <div class="space-y-6">
             <div class="flex justify-center space-x-4">
-                <button id="tab-ingredient" class="py-2 px-6 rounded-full font-semibold transition-all duration-300 transform hover:scale-105"
-                        style="background-color: #4a5568; color: #cbd5e0;">
+                <button id="tab-ingredient" class="py-2 px-6 rounded-full font-semibold transition-all duration-300 transform hover:scale-105 active-tab">
                     Search by Ingredient
                 </button>
-                <button id="tab-cocktail" class="py-2 px-6 rounded-full font-semibold transition-all duration-300 transform hover:scale-105"
-                        style="background-color: #4a5568; color: #cbd5e0;">
+                <button id="tab-cocktail" class="py-2 px-6 rounded-full font-semibold transition-all duration-300 transform hover:scale-105">
                     Search by Cocktail
                 </button>
             </div>
@@ -129,7 +134,7 @@
         </div>
     </div>
 
-<script>
+    <script>
         document.addEventListener('DOMContentLoaded', () => {
             // --- UI Elements ---
             const tabIngredientBtn = document.getElementById('tab-ingredient');
@@ -141,11 +146,6 @@
             const searchIngredientBtn = document.getElementById('search-ingredient-btn');
             const searchCocktailBtn = document.getElementById('search-cocktail-btn');
             const resultsContainer = document.getElementById('results-container');
-
-            // Set initial active tab
-            let activeTab = 'ingredient';
-            tabIngredientBtn.style.backgroundColor = '#48bb78';
-            tabIngredientBtn.style.color = '#fff';
 
             // --- Image URLs ---
             const imageUrls = {
@@ -200,24 +200,18 @@
 
             // --- Event Listeners for Tabs ---
             tabIngredientBtn.addEventListener('click', () => {
-                activeTab = 'ingredient';
+                tabIngredientBtn.classList.add('active-tab');
+                tabCocktailBtn.classList.remove('active-tab');
                 searchByIngredientContainer.classList.remove('hidden');
                 searchByCocktailContainer.classList.add('hidden');
-                tabIngredientBtn.style.backgroundColor = '#48bb78';
-                tabIngredientBtn.style.color = '#fff';
-                tabCocktailBtn.style.backgroundColor = '#4a5568';
-                tabCocktailBtn.style.color = '#cbd5e0';
                 resultsContainer.innerHTML = `<p class="text-center text-gray-400">Your results will appear here after you search.</p>`;
             });
 
             tabCocktailBtn.addEventListener('click', () => {
-                activeTab = 'cocktail';
-                searchByIngredientContainer.classList.add('hidden');
+                tabCocktailBtn.classList.add('active-tab');
+                tabIngredientBtn.classList.remove('active-tab');
                 searchByCocktailContainer.classList.remove('hidden');
-                tabCocktailBtn.style.backgroundColor = '#48bb78';
-                tabCocktailBtn.style.color = '#fff';
-                tabIngredientBtn.style.backgroundColor = '#4a5568';
-                tabIngredientBtn.style.color = '#cbd5e0';
+                searchByIngredientContainer.classList.add('hidden');
                 resultsContainer.innerHTML = `<p class="text-center text-gray-400">Your results will appear here after you search.</p>`;
             });
 
@@ -255,7 +249,7 @@
 
                 if (foundCocktails.length > 0) {
                     const header = document.createElement('h2');
-                    header.className = "text-2xl font-semibold mb-4 text-center text-green-300 fade-in-item";
+                    header.className = "text-2xl font-semibold mb-4 text-center neon-blue fade-in-item";
                     header.textContent = `Cocktails with '${query}':`;
                     resultsContainer.appendChild(header);
 
@@ -269,7 +263,10 @@
                     });
                     resultsContainer.appendChild(grid);
                 } else {
-                    resultsContainer.innerHTML = `<p class="text-center text-red-400 font-semibold mt-4">No cocktails found with '${query}'. Please check the spelling or try a different ingredient.</p>`;
+                    const message = document.createElement('p');
+                    message.className = "text-center neon-pink font-semibold mt-4";
+                    message.textContent = `No cocktails found with '${query}'. Please check the spelling or try a different ingredient.`;
+                    resultsContainer.appendChild(message);
                 }
             }
 
@@ -279,7 +276,7 @@
                 
                 if (cocktailData) {
                     const header = document.createElement('h2');
-                    header.className = "text-2xl font-semibold mb-4 text-center text-green-300 fade-in-item";
+                    header.className = "text-2xl font-semibold mb-4 text-center neon-blue fade-in-item";
                     header.textContent = `Ingredients for '${query}':`;
                     resultsContainer.appendChild(header);
 
@@ -293,7 +290,10 @@
                     });
                     resultsContainer.appendChild(grid);
                 } else {
-                    resultsContainer.innerHTML = `<p class="text-center text-red-400 font-semibold mt-4">Cocktail '${query}' not found. Please check the spelling or try a different cocktail.</p>`;
+                    const message = document.createElement('p');
+                    message.className = "text-center neon-pink font-semibold mt-4";
+                    message.textContent = `Cocktail '${query}' not found. Please check the spelling or try a different cocktail.`;
+                    resultsContainer.appendChild(message);
                 }
             }
 
@@ -307,7 +307,7 @@
                 img.className = "w-full h-auto rounded-xl mb-4 image-card object-cover";
                 
                 const cardTitle = document.createElement('h3');
-                cardTitle.className = "text-lg font-bold text-teal-300";
+                cardTitle.className = "text-lg font-bold neon-pink";
                 cardTitle.textContent = title;
                 
                 card.appendChild(img);
@@ -316,3 +316,5 @@
             }
         });
     </script>
+</body>
+</html>
