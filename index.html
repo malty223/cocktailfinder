@@ -4,7 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Strikes Bar</title>
+    <!-- Use the Inter font for a clean, modern look -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+    <!-- Include Tailwind CSS for all styling -->
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         body {
@@ -24,11 +26,12 @@
             background-color: #1a1a1a; /* Darker input background */
             border-color: #4a5568;
             color: #e2e8f0; /* Light text color */
+            transition: box-shadow 0.3s ease-in-out, border-color 0.3s ease-in-out;
         }
         /* Neon glow effect for the search bar when it's focused */
         .input-style:focus {
             outline: none;
-            box-shadow: 0 0 10px #00ffff, 0 0 20px #00ffff; /* Neon blue glow */
+            box-shadow: 0 0 15px #00ffff, 0 0 25px #00ffff; /* Neon blue glow */
             border-color: #00ffff;
         }
         .button-style {
@@ -60,6 +63,7 @@
         #tab-ingredient, #tab-cocktail {
             background-color: #2d3748;
             color: #cbd5e0;
+            transition: background-color 0.3s ease, color 0.3s ease;
         }
         #tab-ingredient.active-tab, #tab-cocktail.active-tab {
             background-color: #ff00ff !important;
@@ -93,6 +97,7 @@
 <body>
 
     <div class="container-bg w-full max-w-4xl p-8 rounded-2xl shadow-2xl space-y-8">
+        <!-- Header Section -->
         <header class="text-center">
             <h1 class="text-4xl sm:text-5xl font-bold neon-gradient neon-gradient-text-shadow mb-2">
                 🎳 Strikes Bar
@@ -100,7 +105,9 @@
             <p class="text-md sm:text-lg text-gray-400">Search for cocktails by ingredient or explore their recipes.</p>
         </header>
 
+        <!-- Search and Tab Section -->
         <div class="space-y-6">
+            <!-- Tab Buttons -->
             <div class="flex justify-center space-x-4">
                 <button id="tab-ingredient" class="py-2 px-6 rounded-full font-semibold transition-all duration-300 transform hover:scale-105 active-tab">
                     Search by Ingredient
@@ -110,6 +117,7 @@
                 </button>
             </div>
 
+            <!-- Input Fields -->
             <div id="search-by-ingredient-container" class="space-y-4">
                 <input type="text" id="ingredient-input" placeholder="e.g., vodka, lime juice, gin"
                        class="input-style w-full p-3 rounded-xl border focus:outline-none focus:ring-2 focus:ring-teal-500 transition-shadow">
@@ -129,11 +137,14 @@
             </div>
         </div>
 
+        <!-- Result Section -->
         <div id="results-container" class="mt-8">
+            <!-- Results will be dynamically inserted here -->
             <p class="text-center text-gray-400">Your results will appear here after you search.</p>
         </div>
     </div>
 
+    <!-- JavaScript for dynamic functionality -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             // --- UI Elements ---
