@@ -1,44 +1,62 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Strikes Bar - Home</title>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #000000; /* Pure black background */
-            color: #e2e8f0;
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 1rem;
-        }
-        .container-bg {
-            background-color: #0d0d0d; /* Slightly lighter black for the container */
-        }
-        /* Neon gradient for the main title */
-        .neon-gradient {
-            background-clip: text;
-            -webkit-background-clip: text;
-            color: transparent;
-            background-image: linear-gradient(to right, #00ffff, #ff00ff);
-        }
-        .neon-gradient-text-shadow {
-            text-shadow: 0 0 5px #00ffff, 0 0 10px #ff00ff;
-        }
-        .button-style {
-            background-image: linear-gradient(to right, #00ffff, #ff00ff);
-            transition: transform 0.3s ease, background-image 0.3s ease;
-            box-shadow: 0 0 10px rgba(0, 255, 255, 0.5); /* Soft neon glow */
-        }
-        .button-style:hover {
-            background-image: linear-gradient(to right, #ff00ff, #00ffff);
-            transform: scale(1.05); /* Slight hover effect */
-        }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Strikes Bar</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #000000; /* Pure black background */
+            color: #e2e8f0;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+        }
+        .container-bg {
+            background-color: #0d0d0d; /* Slightly lighter black for the container */
+        }
+        .input-style {
+            background-color: #1a1a1a; /* Darker input background */
+            border-color: #4a5568;
+            color: #e2e8f0; /* Light text color */
+            transition: box-shadow 0.3s ease-in-out, border-color 0.3s ease-in-out;
+        }
+        /* Neon glow effect for the search bar when it's focused */
+        .input-style:focus {
+            outline: none;
+            box-shadow: 0 0 15px #00ffff, 0 0 25px #00ffff; /* Neon blue glow */
+            border-color: #00ffff;
+        }
+        .button-style {
+            background-image: linear-gradient(to right, #00ffff, #ff00ff); /* Neon blue to pink gradient */
+            transition: background-image 0.3s ease;
+        }
+        .button-style:hover {
+            background-image: linear-gradient(to right, #ff00ff, #00ffff); /* Reverse gradient on hover */
+        }
+        /* Neon text colors for headings and other text */
+        .neon-blue {
+            color: #00ffff;
+        }
+        .neon-pink {
+            color: #ff00ff;
+        }
+        /* Neon gradient for the main title */
+        .neon-gradient {
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            background-image: linear-gradient(to right, #00ffff, #ff00ff);
+        }
+        .neon-gradient-text-shadow {
+            text-shadow: 0 0 5px #00ffff, 0 0 10px #ff00ff;
+        }
+        
         /* Navigation link style */
         .nav-link {
             color: #00ffff;
@@ -48,30 +66,273 @@
             color: #ff00ff;
             text-shadow: 0 0 5px #ff00ff;
         }
-    </style>
+        
+        /* Tab button colors */
+        #tab-ingredient, #tab-cocktail {
+            background-color: #2d3748;
+            color: #cbd5e0;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        #tab-ingredient.active-tab, #tab-cocktail.active-tab {
+            background-color: #ff00ff !important;
+            color: #fff !important;
+        }
+        /* Custom scrollbar for a polished look */
+        ::-webkit-scrollbar {
+            width: 12px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #1a1a1a;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #00ffff;
+            border-radius: 10px;
+            border: 3px solid #1a1a1a;
+        }
+        .image-card {
+            min-height: 150px;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .fade-in-item {
+            animation: fadeIn 0.5s ease-out forwards;
+        }
+    </style>
 </head>
 <body>
 
-    <div class="container-bg w-full max-w-4xl p-8 rounded-2xl shadow-2xl space-y-8 text-center">
-        <header>
-            <h1 class="text-5xl sm:text-6xl font-bold neon-gradient neon-gradient-text-shadow mb-4">
-                Welcome to Strikes Bar! 🎳
-            </h1>
-            <p class="text-lg sm:text-xl text-gray-400">Your ultimate destination for great drinks and a good time.</p>
-        </header>
+    <div class="container-bg w-full max-w-4xl p-8 rounded-2xl shadow-2xl space-y-8">
+        <header class="text-center">
+            <nav class="flex justify-between items-center mb-4">
+                <a href="home.html" class="nav-link font-bold text-lg transition-all duration-300 transform hover:scale-105">
+                    Home
+                </a>
+                <h1 class="text-4xl sm:text-5xl font-bold neon-gradient neon-gradient-text-shadow">
+                    🎳 Strikes Bar
+                </h1>
+                <div class="w-12"></div>
+            </nav>
+            <p class="text-md sm:text-lg text-gray-400">Search for cocktails by ingredient or explore their recipes.</p>
+        </header>
 
-        <main class="space-y-6">
-            <p class="text-gray-300">
-                Explore our digital menu to find your favorite cocktails or discover new ones based on your preferred ingredients.
-            </p>
-            
-            <a href="index.html" class="inline-block">
-                <button class="button-style px-8 py-4 rounded-full font-bold text-white shadow-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-400">
-                    Find a Drink
-                </button>
-            </a>
-        </main>
-    </div>
+        <div class="space-y-6">
+            <div class="flex justify-center space-x-4">
+                <button id="tab-ingredient" class="py-2 px-6 rounded-full font-semibold transition-all duration-300 transform hover:scale-105 active-tab">
+                    Search by Ingredient
+                </button>
+                <button id="tab-cocktail" class="py-2 px-6 rounded-full font-semibold transition-all duration-300 transform hover:scale-105">
+                    Search by Cocktail
+                </button>
+            </div>
 
+            <div id="search-by-ingredient-container" class="space-y-4">
+                <input type="text" id="ingredient-input" placeholder="e.g., vodka, lime juice, gin"
+                       class="input-style w-full p-3 rounded-xl border focus:outline-none focus:ring-2 focus:ring-teal-500 transition-shadow">
+                <button id="search-ingredient-btn"
+                        class="button-style w-full py-3 rounded-xl font-bold text-white shadow-lg transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-400">
+                    Find Cocktails
+                </button>
+            </div>
+
+            <div id="search-by-cocktail-container" class="hidden space-y-4">
+                <input type="text" id="cocktail-input" placeholder="e.g., Margarita, Mojito"
+                       class="input-style w-full p-3 rounded-xl border focus:outline-none focus:ring-2 focus:ring-teal-500 transition-shadow">
+                <button id="search-cocktail-btn"
+                        class="button-style w-full py-3 rounded-xl font-bold text-white shadow-lg transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-400">
+                    Find Ingredients
+                </button>
+            </div>
+        </div>
+
+        <div id="results-container" class="mt-8">
+            <p class="text-center text-gray-400">Your results will appear here after you search.</p>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- UI Elements ---
+            const tabIngredientBtn = document.getElementById('tab-ingredient');
+            const tabCocktailBtn = document.getElementById('tab-cocktail');
+            const searchByIngredientContainer = document.getElementById('search-by-ingredient-container');
+            const searchByCocktailContainer = document.getElementById('search-by-cocktail-container');
+            const ingredientInput = document.getElementById('ingredient-input');
+            const cocktailInput = document.getElementById('cocktail-input');
+            const searchIngredientBtn = document.getElementById('search-ingredient-btn');
+            const searchCocktailBtn = document.getElementById('search-cocktail-btn');
+            const resultsContainer = document.getElementById('results-container');
+
+            // --- Image URLs ---
+            const imageUrls = {
+                "vodka": "images/vodka.jpg",
+                "amaretto/whiskey sour": "images/amaretto-whiskey-sour.png",
+                "barbados sunset": "images/barbados-sunset.webp",
+                "blue hawaiian": "images/blue-hawaiian.png",
+                "blue lagoon": "images/blue-lagoon.jpeg",
+                "espresso martini": "images/espresso-martini.jpeg",
+                "godfather": "images/godfather.jpeg",
+                "island breeze": "images/island-breeze.jpeg",
+                "long island iced tea": "images/long-island-iced-tea.jpeg",
+                "margarita": "images/margarita.jpeg",
+                "mojito": "images/mojito.jpeg",
+                "old fashioned": "images/old-fashioned.jpeg",
+                "pink gin spritz": "images/pink-gin-spritz.jpeg",
+                "pornstar martini": "images/pornstar-martini.jpeg",
+                "sex on the beach": "images/sex-on-the-beach.jpeg",
+                "strawberry daquiri": "images/strawberry-daquiri.jpeg",
+                "tequila sunrise": "images/tequila-sunrise.webp",
+                "tom collins": "images/tom-collins.jpeg",
+                "tropical grande": "images/tropical-grande.jpeg",
+                "woo woo": "images/woo-woo.jpeg",
+            };
+
+            // --- Data for the search (from your original file) ---
+            const cocktailsData = {
+                "amaretto/whiskey sour": { "amaretto": 1, "bitters": 1, "cherries": 1, "whiskey": 1 },
+                "barbados sunset": { "blue curacao": 1, "light rum": 1, "grenadine": 1, "orange juice": 1, "pineapple juice": 1 },
+                "blue hawaiian": { "cream of coconut": 1, "pineapple juice": 1, "white rum": 1, "blue curacao": 1 },
+                "blue lagoon": { "blue curacao": 1, "lemonade": 1, "vodka": 1 },
+                "espresso martini": { "coffee liqueur": 1, "espresso": 1, "vodka": 1 },
+                "godfather": { "amaretto": 1, "scotch whiskey": 1 },
+                "island breeze": { "cranberry juice": 1, "grapefruit juice": 1, "vodka": 1 },
+                "long island iced tea": { "coke": 1, "gin": 1, "light rum": 1, "tequila": 1, "triple sec": 1, "vodka": 1 },
+                "mai tai": { "amaretto": 1, "light rum": 1, "lime juice": 1, "pineapple juice": 1, "white rum": 1 },
+                "margarita": { "lime juice": 1, "tequila": 1, "triple sec": 1 },
+                "mojito": { "mint": 1, "lime juice": 1, "soda water": 1, "sugar syrup": 1, "white rum": 1 },
+                "pink gin fizz": { "lemon juice": 1, "prosecco": 1, "pink gin": 1 },
+                "sex on the beach": { "cranberry juice": 1, "orange juice": 1, "peach schnapps": 1, "vodka": 1 },
+                "strawberry daiquiri": { "fresh strawberrys": 1, "lime juice": 1, "light rum": 1 },
+                "tropical breeze": { "malibu": 1, "orange juice": 1, "passionfruit juice": 1, "passoa": 1, "pineapple juice": 1, "vodka": 1 },
+                "white russian": { "coffee liqueur": 1, "cream": 1, "vodka": 1 },
+                "pink gin spritz": { "pink gin": 1, "prosecco": 1, "raspberry": 1 },
+                "pornstar martini": { "passion fruit": 1, "prosecco": 1, "vanilla vodka": 1 },
+                "old fashioned": { "bitters": 1, "brown sugar": 1, "soda water": 1, "whiskey": 1 },
+                "tequila sunrise": { "grenadine": 1, "orange juice": 1, "tequila": 1 },
+                "tom collins": { "gin": 1, "lemon juice": 1, "soda water": 1, "sugar syrup": 1 },
+                "tropical grande": { "coconut rum": 1, "mango juice": 1, "orange juice": 1, "pineapple juice": 1, "white rum": 1 },
+                "woo woo": { "peach schnapps": 1, "cranberry juice": 1, "vodka": 1 }
+            };
+
+            // --- Event Listeners for Tabs ---
+            tabIngredientBtn.addEventListener('click', () => {
+                tabIngredientBtn.classList.add('active-tab');
+                tabCocktailBtn.classList.remove('active-tab');
+                searchByIngredientContainer.classList.remove('hidden');
+                searchByCocktailContainer.classList.add('hidden');
+                resultsContainer.innerHTML = `<p class="text-center text-gray-400">Your results will appear here after you search.</p>`;
+            });
+
+            tabCocktailBtn.addEventListener('click', () => {
+                tabCocktailBtn.classList.add('active-tab');
+                tabIngredientBtn.classList.remove('active-tab');
+                searchByCocktailContainer.classList.remove('hidden');
+                searchByIngredientContainer.classList.add('hidden');
+                resultsContainer.innerHTML = `<p class="text-center text-gray-400">Your results will appear here after you search.</p>`;
+            });
+
+            // --- Search Functionality ---
+            searchIngredientBtn.addEventListener('click', () => {
+                const query = ingredientInput.value.trim().toLowerCase();
+                displayIngredientResults(query);
+            });
+
+            searchCocktailBtn.addEventListener('click', () => {
+                const query = cocktailInput.value.trim().toLowerCase();
+                displayCocktailResults(query);
+            });
+
+            // Add Enter key listeners to inputs
+            ingredientInput.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') {
+                    searchIngredientBtn.click();
+                }
+            });
+
+            cocktailInput.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') {
+                    searchCocktailBtn.click();
+                }
+            });
+
+            // --- Display Logic ---
+            function displayIngredientResults(query) {
+                resultsContainer.innerHTML = '';
+                const foundCocktails = Object.keys(cocktailsData).filter(cocktail => {
+                    const ingredients = Object.keys(cocktailsData[cocktail]);
+                    return ingredients.some(ingredient => ingredient.toLowerCase() === query);
+                });
+
+                if (foundCocktails.length > 0) {
+                    const header = document.createElement('h2');
+                    header.className = "text-2xl font-semibold mb-4 text-center neon-blue fade-in-item";
+                    header.textContent = `Cocktails with '${query}':`;
+                    resultsContainer.appendChild(header);
+
+                    const grid = document.createElement('div');
+                    grid.className = "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6";
+                    
+                    foundCocktails.forEach((cocktail, index) => {
+                        const card = createCard(cocktail, imageUrls[cocktail.toLowerCase()] || `https://placehold.co/300x200/2d3748/ffffff?text=${cocktail.replace(/ /g, '+')}`, 'Cocktail');
+                        card.style.animationDelay = `${index * 0.1}s`;
+                        grid.appendChild(card);
+                    });
+                    resultsContainer.appendChild(grid);
+                } else {
+                    const message = document.createElement('p');
+                    message.className = "text-center neon-pink font-semibold mt-4";
+                    message.textContent = `No cocktails found with '${query}'. Please check the spelling or try a different ingredient.`;
+                    resultsContainer.appendChild(message);
+                }
+            }
+
+            function displayCocktailResults(query) {
+                resultsContainer.innerHTML = '';
+                const cocktailData = cocktailsData[query.toLowerCase()];
+                
+                if (cocktailData) {
+                    const header = document.createElement('h2');
+                    header.className = "text-2xl font-semibold mb-4 text-center neon-blue fade-in-item";
+                    header.textContent = `Ingredients for '${query}':`;
+                    resultsContainer.appendChild(header);
+
+                    const grid = document.createElement('div');
+                    grid.className = "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6";
+
+                    Object.keys(cocktailData).forEach((ingredient, index) => {
+                        const card = createCard(ingredient, imageUrls[ingredient.toLowerCase()] || `https://placehold.co/300x200/2d3748/ffffff?text=${ingredient.replace(/ /g, '+')}`, 'Ingredient');
+                        card.style.animationDelay = `${index * 0.1}s`;
+                        grid.appendChild(card);
+                    });
+                    resultsContainer.appendChild(grid);
+                } else {
+                    const message = document.createElement('p');
+                    message.className = "text-center neon-pink font-semibold mt-4";
+                    message.textContent = `Cocktail '${query}' not found. Please check the spelling or try a different cocktail.`;
+                    resultsContainer.appendChild(message);
+                }
+            }
+
+            function createCard(title, imageUrl, type) {
+                const card = document.createElement('div');
+                card.className = "bg-gray-800 rounded-2xl p-4 shadow-lg flex flex-col items-center text-center fade-in-item transform transition-transform hover:scale-105";
+                
+                const img = document.createElement('img');
+                img.src = imageUrl;
+                img.alt = title;
+                img.className = "w-full h-auto rounded-xl mb-4 image-card object-cover";
+                
+                const cardTitle = document.createElement('h3');
+                cardTitle.className = "text-lg font-bold neon-pink";
+                cardTitle.textContent = title;
+                
+                card.appendChild(img);
+                card.appendChild(cardTitle);
+                return card;
+            }
+        });
+    </script>
 </body>
 </html>
