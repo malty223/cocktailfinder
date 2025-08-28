@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Strikes Bar - Home</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #000000; /* Pure black background */
+            color: #e2e8f0;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+        }
+        .container-bg {
+            background-color: #0d0d0d; /* Slightly lighter black for the container */
+        }
+        /* Neon gradient for the main title */
+        .neon-gradient {
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            background-image: linear-gradient(to right, #00ffff, #ff00ff);
+        }
+        .neon-gradient-text-shadow {
+            text-shadow: 0 0 5px #00ffff, 0 0 10px #ff00ff;
+        }
+        .button-style {
+            background-image: linear-gradient(to right, #00ffff, #ff00ff);
+            transition: transform 0.3s ease, background-image 0.3s ease;
+            box-shadow: 0 0 10px rgba(0, 255, 255, 0.5); /* Soft neon glow */
+        }
+        .button-style:hover {
+            background-image: linear-gradient(to right, #ff00ff, #00ffff);
+            transform: scale(1.05); /* Slight hover effect */
+        }
+        /* Navigation link style */
+        .nav-link {
+            color: #00ffff;
+            transition: color 0.3s ease;
+        }
+        .nav-link:hover {
+            color: #ff00ff;
+            text-shadow: 0 0 5px #ff00ff;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container-bg w-full max-w-4xl p-8 rounded-2xl shadow-2xl space-y-8 text-center">
+        <header>
+            <h1 class="text-5xl sm:text-6xl font-bold neon-gradient neon-gradient-text-shadow mb-4">
+                Welcome to Strikes Bar! 🎳
+            </h1>
+            <p class="text-lg sm:text-xl text-gray-400">Your ultimate destination for great drinks and a good time.</p>
+        </header>
+
+        <main class="space-y-6">
+            <p class="text-gray-300">
+                Explore our digital menu to find your favorite cocktails or discover new ones based on your preferred ingredients.
+            </p>
+            
+            <a href="index.html" class="inline-block">
+                <button class="button-style px-8 py-4 rounded-full font-bold text-white shadow-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-400">
+                    Find a Drink
+                </button>
+            </a>
+        </main>
+    </div>
+
+</body>
+</html>
