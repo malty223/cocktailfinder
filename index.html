@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cocktail Finder</title>
+    <!-- Use the Inter font for a clean, modern look -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+    <!-- Include Tailwind CSS for all styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #1a202c; /* Ensure background color is consistent */
+            color: #e2e8f0;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+        }
+        .container-bg {
+            background-color: #1a202c; /* Dark background */
+        }
+        .input-style {
+            background-color: #2d3748; /* Darker input background */
+            border-color: #4a5568;
+            color: #e2e8f0; /* Light text color */
+        }
+        .button-style {
+            background-color: #48bb78; /* Green button color */
+            transition: background-color 0.3s ease;
+        }
+        .button-style:hover {
+            background-color: #38a169; /* Darker green on hover */
+        }
+        /* Custom scrollbar for a polished look */
+        ::-webkit-scrollbar {
+            width: 12px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #2d3748;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #4a5568;
+            border-radius: 10px;
+            border: 3px solid #2d3748;
+        }
+        .image-card {
+            min-height: 150px; /* Consistent image card height */
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .fade-in-item {
+            animation: fadeIn 0.5s ease-out forwards;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container-bg w-full max-w-4xl p-8 rounded-2xl shadow-2xl space-y-8">
+        <!-- Header Section -->
+        <header class="text-center">
+            <h1 class="text-4xl sm:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-teal-400 to-green-500 mb-2">
+                🍹 Cocktail Finder
+            </h1>
+            <p class="text-md sm:text-lg text-gray-400">Search for cocktails by ingredient or explore their recipes.</p>
+        </header>
+
+        <!-- Search and Tab Section -->
+        <div class="space-y-6">
+            <!-- Tab Buttons -->
+            <div class="flex justify-center space-x-4">
+                <button id="tab-ingredient" class="py-2 px-6 rounded-full font-semibold transition-all duration-300 transform hover:scale-105"
+                        style="background-color: #4a5568; color: #cbd5e0;">
+                    Search by Ingredient
+                </button>
+                <button id="tab-cocktail" class="py-2 px-6 rounded-full font-semibold transition-all duration-300 transform hover:scale-105"
+                        style="background-color: #4a5568; color: #cbd5e0;">
+                    Search by Cocktail
+                </button>
+            </div>
+
+            <!-- Input Fields -->
+            <div id="search-by-ingredient-container" class="space-y-4">
+                <input type="text" id="ingredient-input" placeholder="e.g., vodka, lime juice, gin"
+                       class="input-style w-full p-3 rounded-xl border focus:outline-none focus:ring-2 focus:ring-teal-500 transition-shadow">
+                <button id="search-ingredient-btn"
+                        class="button-style w-full py-3 rounded-xl font-bold text-white shadow-lg transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-400">
+                    Find Cocktails
+                </button>
+            </div>
+
+            <div id="search-by-cocktail-container" class="hidden space-y-4">
+                <input type="text" id="cocktail-input" placeholder="e.g., Margarita, Mojito"
+                       class="input-style w-full p-3 rounded-xl border focus:outline-none focus:ring-2 focus:ring-teal-500 transition-shadow">
+                <button id="search-cocktail-btn"
+                        class="button-style w-full py-3 rounded-xl font-bold text-white shadow-lg transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-400">
+                    Find Ingredients
+                </button>
+            </div>
+        </div>
+
+        <!-- Result Section -->
+        <div id="results-container" class="mt-8">
+            <!-- Results will be dynamically inserted here -->
+            <p class="text-center text-gray-400">Your results will appear here after you search.</p>
+        </div>
+    </div>
+
+    <!-- JavaScript for dynamic functionality -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- UI Elements ---
+            const tabIngredientBtn = document.getElementById('tab-ingredient');
+            const tabCocktailBtn = document.getElementById('tab-cocktail');
+            const searchByIngredientContainer = document.getElementById('search-by-ingredient-container');
+            const searchByCocktailContainer = document.getElementById('search-by-cocktail-container');
+            const ingredientInput = document.getElementById('ingredient-input');
+            const cocktailInput = document.getElementById('cocktail-input');
+            const searchIngredientBtn = document.getElementById('search-ingredient-btn');
+            const searchCocktailBtn = document.getElementById('search-cocktail-btn');
+            const resultsContainer = document.getElementById('results-container');
+
+            // Set initial active tab
+            let activeTab = 'ingredient';
+            tabIngredientBtn.style.backgroundColor = '#48bb78';
+            tabIngredientBtn.style.color = '#fff';
+
+            // --- Image URLs (for demonstration, as the CSV doesn't have them) ---
+            const imageUrls = {
+                "vodka": "https://placehold.co/300x200/2d3748/ffffff?text=Vodka",
+                "espresso martini": "https://placehold.co/300x200/2d3748/ffffff?text=Espresso+Martini",
+                "mojito": "https://placehold.co/300x200/2d3748/ffffff?text=Mojito",
+                "gin": "https://placehold.co/300x200/2d3748/ffffff?text=Gin",
+                "margarita": "https://placehold.co/300x200/2d3748/ffffff?text=Margarita",
+                "long island iced tea": "https://placehold.co/300x200/2d3748/ffffff?text=Long+Island+Iced+Tea",
+                "lime juice": "https://placehold.co/300x200/2d3748/ffffff?text=Lime+Juice",
+                "tequila": "https://placehold.co/300x200/2d3748/ffffff?text=Tequila",
+                "triple sec": "https://placehold.co/300x200/2d3748/ffffff?text=Triple+Sec",
+                "white rum": "https://placehold.co/300x200/2d3748/ffffff?text=White+Rum",
+                "mint": "https://placehold.co/300x200/2d3748/ffffff?text=Mint"
+            };
+
+            // --- Data from the CSV file (hardcoded for a self-contained app) ---
+            const cocktailsData = {
+                "amaretto/whiskey sour": { "amaretto": 1, "bitters": 1, "cherries": 1, "whiskey": 1 },
+                "barbados sunset": { "blue curacao": 1, "light rum": 1, "grenadine": 1, "orange juice": 1, "pineapple juice": 1 },
+                "blue hawaiian": { "cream of coconut": 1, "pineapple juice": 1, "white rum": 1, "blue curacao": 1 },
+                "blue lagoon": { "blue curacao": 1, "lemonade": 1, "vodka": 1 },
+                "espresso martini": { "coffee liqueur": 1, "espresso": 1, "vodka": 1 },
+                "godfather": { "amaretto": 1, "scotch whiskey": 1 },
+                "island breeze": { "cranberry juice": 1, "grapefruit juice": 1, "vodka": 1 },
+                "long island iced tea": { "coke": 1, "gin": 1, "light rum": 1, "tequila": 1, "triple sec": 1, "vodka": 1 },
+                "mai tai": { "amaretto": 1, "light rum": 1, "lime juice": 1, "pineapple juice": 1, "white rum": 1 },
+                "margarita": { "lime juice": 1, "tequila": 1, "triple sec": 1 },
+                "mojito": { "mint": 1, "lime juice": 1, "soda water": 1, "sugar syrup": 1, "white rum": 1 },
+                "pink gin fizz": { "lemon juice": 1, "prosecco": 1, "pink gin": 1 },
+                "sex on the beach": { "cranberry juice": 1, "orange juice": 1, "peach schnapps": 1, "vodka": 1 },
+                "strawberry daiquiri": { "fresh strawberrys": 1, "lime juice": 1, "light rum": 1 },
+                "tropical breeze": { "malibu": 1, "orange juice": 1, "passionfruit juice": 1, "passoa": 1, "pineapple juice": 1, "vodka": 1 },
+                "white russian": { "coffee liqueur": 1, "cream": 1, "vodka": 1 }
+            };
+
+            // --- Event Listeners for Tabs ---
+            tabIngredientBtn.addEventListener('click', () => {
+                activeTab = 'ingredient';
+                searchByIngredientContainer.classList.remove('hidden');
+                searchByCocktailContainer.classList.add('hidden');
+                tabIngredientBtn.style.backgroundColor = '#48bb78';
+                tabIngredientBtn.style.color = '#fff';
+                tabCocktailBtn.style.backgroundColor = '#4a5568';
+                tabCocktailBtn.style.color = '#cbd5e0';
+                resultsContainer.innerHTML = `<p class="text-center text-gray-400">Your results will appear here after you search.</p>`;
+            });
+
+            tabCocktailBtn.addEventListener('click', () => {
+                activeTab = 'cocktail';
+                searchByIngredientContainer.classList.add('hidden');
+                searchByCocktailContainer.classList.remove('hidden');
+                tabCocktailBtn.style.backgroundColor = '#48bb78';
+                tabCocktailBtn.style.color = '#fff';
+                tabIngredientBtn.style.backgroundColor = '#4a5568';
+                tabIngredientBtn.style.color = '#cbd5e0';
+                resultsContainer.innerHTML = `<p class="text-center text-gray-400">Your results will appear here after you search.</p>`;
+            });
+
+            // --- Search Functionality ---
+            searchIngredientBtn.addEventListener('click', () => {
+                const query = ingredientInput.value.trim().toLowerCase();
+                displayIngredientResults(query);
+            });
+
+            searchCocktailBtn.addEventListener('click', () => {
+                const query = cocktailInput.value.trim().toLowerCase();
+                displayCocktailResults(query);
+            });
+
+            // Add Enter key listeners to inputs
+            ingredientInput.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') {
+                    searchIngredientBtn.click();
+                }
+            });
+
+            cocktailInput.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') {
+                    searchCocktailBtn.click();
+                }
+            });
+
+            // --- Display Logic ---
+            function displayIngredientResults(query) {
+                resultsContainer.innerHTML = '';
+                const foundCocktails = Object.keys(cocktailsData).filter(cocktail => {
+                    const ingredients = Object.keys(cocktailsData[cocktail]);
+                    return ingredients.some(ingredient => ingredient.toLowerCase() === query);
+                });
+
+                if (foundCocktails.length > 0) {
+                    const header = document.createElement('h2');
+                    header.className = "text-2xl font-semibold mb-4 text-center text-green-300 fade-in-item";
+                    header.textContent = `Cocktails with '${query}':`;
+                    resultsContainer.appendChild(header);
+
+                    const grid = document.createElement('div');
+                    grid.className = "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6";
+                    
+                    foundCocktails.forEach((cocktail, index) => {
+                        const card = createCard(cocktail, imageUrls[cocktail.toLowerCase()] || `https://placehold.co/300x200/2d3748/ffffff?text=${cocktail.replace(/ /g, '+')}`, 'Cocktail');
+                        card.style.animationDelay = `${index * 0.1}s`;
+                        grid.appendChild(card);
+                    });
+                    resultsContainer.appendChild(grid);
+                } else {
+                    resultsContainer.innerHTML = `<p class="text-center text-red-400 font-semibold mt-4">No cocktails found with '${query}'. Please check the spelling or try a different ingredient.</p>`;
+                }
+            }
+
+            function displayCocktailResults(query) {
+                resultsContainer.innerHTML = '';
+                const cocktailData = cocktailsData[query];
+                
+                if (cocktailData) {
+                    const header = document.createElement('h2');
+                    header.className = "text-2xl font-semibold mb-4 text-center text-green-300 fade-in-item";
+                    header.textContent = `Ingredients for '${query}':`;
+                    resultsContainer.appendChild(header);
+
+                    const grid = document.createElement('div');
+                    grid.className = "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6";
+
+                    Object.keys(cocktailData).forEach((ingredient, index) => {
+                        const card = createCard(ingredient, imageUrls[ingredient.toLowerCase()] || `https://placehold.co/300x200/2d3748/ffffff?text=${ingredient.replace(/ /g, '+')}`, 'Ingredient');
+                        card.style.animationDelay = `${index * 0.1}s`;
+                        grid.appendChild(card);
+                    });
+                    resultsContainer.appendChild(grid);
+                } else {
+                    resultsContainer.innerHTML = `<p class="text-center text-red-400 font-semibold mt-4">Cocktail '${query}' not found. Please check the spelling or try a different cocktail.</p>`;
+                }
+            }
+
+            function createCard(title, imageUrl, type) {
+                const card = document.createElement('div');
+                card.className = "bg-gray-800 rounded-2xl p-4 shadow-lg flex flex-col items-center text-center fade-in-item transform transition-transform hover:scale-105";
+                
+                const img = document.createElement('img');
+                img.src = imageUrl;
+                img.alt = title;
+                img.className = "w-full h-auto rounded-xl mb-4 image-card object-cover";
+                
+                const cardTitle = document.createElement('h3');
+                cardTitle.className = "text-lg font-bold text-teal-300";
+                cardTitle.textContent = title;
+                
+                card.appendChild(img);
+                card.appendChild(cardTitle);
+                return card;
+            }
+        });
+    </script>
+
+</body>
+</html>
