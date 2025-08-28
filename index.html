@@ -103,7 +103,7 @@
         </div>
     </div>
 
-    <script>
+<script>
         document.addEventListener('DOMContentLoaded', () => {
             // --- UI Elements ---
             const tabIngredientBtn = document.getElementById('tab-ingredient');
@@ -123,6 +123,7 @@
 
             // --- Image URLs ---
             const imageUrls = {
+                "vodka": "images/vodka.jpg",
                 "amaretto/whiskey sour": "images/amaretto-whiskey-sour.png",
                 "barbados sunset": "images/barbados-sunset.webp",
                 "blue hawaiian": "images/blue-hawaiian.png",
@@ -144,7 +145,7 @@
                 "woo woo": "images/woo-woo.jpeg",
             };
 
-            // --- Data from the CSV file (hardcoded for a self-contained app) ---
+            // --- Data for the search (from your original file) ---
             const cocktailsData = {
                 "amaretto/whiskey sour": { "amaretto": 1, "bitters": 1, "cherries": 1, "whiskey": 1 },
                 "barbados sunset": { "blue curacao": 1, "light rum": 1, "grenadine": 1, "orange juice": 1, "pineapple juice": 1 },
@@ -248,7 +249,7 @@
 
             function displayCocktailResults(query) {
                 resultsContainer.innerHTML = '';
-                const cocktailData = cocktailsData[query];
+                const cocktailData = cocktailsData[query.toLowerCase()];
                 
                 if (cocktailData) {
                     const header = document.createElement('h2');
@@ -260,4 +261,32 @@
                     grid.className = "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6";
 
                     Object.keys(cocktailData).forEach((ingredient, index) => {
-                        const card = createCard(ingredient, imageUrls
+                        const card = createCard(ingredient, imageUrls[ingredient.toLowerCase()] || `https://placehold.co/300x200/2d3748/ffffff?text=${ingredient.replace(/ /g, '+')}`, 'Ingredient');
+                        card.style.animationDelay = `${index * 0.1}s`;
+                        grid.appendChild(card);
+                    });
+                    resultsContainer.appendChild(grid);
+                } else {
+                    resultsContainer.innerHTML = `<p class="text-center text-red-400 font-semibold mt-4">Cocktail '${query}' not found. Please check the spelling or try a different cocktail.</p>`;
+                }
+            }
+
+            function createCard(title, imageUrl, type) {
+                const card = document.createElement('div');
+                card.className = "bg-gray-800 rounded-2xl p-4 shadow-lg flex flex-col items-center text-center fade-in-item transform transition-transform hover:scale-105";
+                
+                const img = document.createElement('img');
+                img.src = imageUrl;
+                img.alt = title;
+                img.className = "w-full h-auto rounded-xl mb-4 image-card object-cover";
+                
+                const cardTitle = document.createElement('h3');
+                cardTitle.className = "text-lg font-bold text-teal-300";
+                cardTitle.textContent = title;
+                
+                card.appendChild(img);
+                card.appendChild(cardTitle);
+                return card;
+            }
+        });
+    </script>
